@@ -45,22 +45,12 @@ public class Reponse {
 
     // renvoie le statut du caractère
     private Lettre evaluationCaractere(int position, char carCourant) {
-        if(this.estPresent(carCourant)){
-            if(estPlace(position, carCourant)){
+        if(this.motSecret.contains(Character.toString(carCourant))){
+            if(this.motSecret.toCharArray()[position] == carCourant){
                 return Lettre.PLACEE;
             }
             return Lettre.NON_PLACEE;
         }
         return Lettre.INCORRECTE;
-    }
-
-    // le caractère est présent dans le mot secret
-    private boolean estPresent(char carCourant) {
-        return this.motSecret.contains(Character.toString(carCourant));
-    }
-
-    // le caractère est placé dans le mot secret
-    private boolean estPlace(int position, char carCourant) {
-        return this.motSecret.toCharArray()[position] == carCourant;
     }
 }
