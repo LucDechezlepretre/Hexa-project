@@ -46,37 +46,28 @@ public class Partie {
     // si toutes les lettres sont correctement placées,
     // on a terminé la partie
     public Reponse tourDeJeu(String motPropose) {
-        this.verifieNbEssais();
         var rep = new Reponse(this.motADeviner);
-        if(!this.partieTerminee){
+        if(!this.isTerminee()){
             this.nbEssais++;
             rep.compare(motPropose);
             if(rep.lettresToutesPlacees()){
-                this.done();
+                this.partieTerminee = true;
             }
             return rep;
         }
-        this.done();
+        this.partieTerminee = true;
         return rep;
-    }
-
-    // vérifie que le nombre d'essais max n'est pas atteint
-    private void verifieNbEssais() {
-        //TBD
-        if(!(this.nbEssais < Partie.NB_ESSAIS_MAX)){
-            this.partieTerminee = true;
-        }
     }
 
     // la partie est-elle terminée
     public boolean isTerminee() {
-        this.verifieNbEssais();
+        if(!(this.nbEssais < Partie.NB_ESSAIS_MAX)){
+            this.partieTerminee = true;
+        }
         return this.partieTerminee;
     }
 
-    // la partie est terminée
-    void done() {
-        //TBD
+    public void setPartieTerminee() {
         this.partieTerminee = true;
     }
 }

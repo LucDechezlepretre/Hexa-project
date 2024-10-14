@@ -7,7 +7,6 @@ import static java.util.Collections.unmodifiableList;
 public class Reponse {
     private final String motSecret;
     private final List<Lettre> resultat = new ArrayList<>();
-    private int position;
 
     public Reponse(String mot) {
         this.motSecret = mot;
@@ -15,7 +14,6 @@ public class Reponse {
 
     // on récupère la lettre à la position dans le résultat
     public Lettre lettre(int position) {
-        this.position = position;
         if(position < this.resultat.size()){
             return this.resultat.get(position);
         }
@@ -27,8 +25,7 @@ public class Reponse {
     public void compare(String essai) {
         char[] motEssai = essai.toCharArray();
         for(int i = 0; i < motEssai.length; i++){
-            this.position = i;
-            this.resultat.add(evaluationCaractere(motEssai[i]));
+            this.resultat.add(evaluationCaractere(i, motEssai[i]));
         }
     }
 
@@ -47,9 +44,9 @@ public class Reponse {
     }
 
     // renvoie le statut du caractère
-    private Lettre evaluationCaractere(char carCourant) {
+    private Lettre evaluationCaractere(int position, char carCourant) {
         if(this.estPresent(carCourant)){
-            if(estPlace(carCourant)){
+            if(estPlace(position, carCourant)){
                 return Lettre.PLACEE;
             }
             return Lettre.NON_PLACEE;
@@ -63,7 +60,7 @@ public class Reponse {
     }
 
     // le caractère est placé dans le mot secret
-    private boolean estPlace(char carCourant) {
-        return this.motSecret.toCharArray()[this.position] == carCourant;
+    private boolean estPlace(int position, char carCourant) {
+        return this.motSecret.toCharArray()[position] == carCourant;
     }
 }
